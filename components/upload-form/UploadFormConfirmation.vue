@@ -6,7 +6,7 @@
     </div>
     <label class="button-checkbox button button--success button--middle">
       <input type="checkbox" @change="confirm()" />
-      <span>Подтверждаю</span>
+      <span>{{ token === "test402" ? "Test 402 error" : "Подтверждаю" }}</span>
     </label>
     <button
       class="button button--danger button--middle"
@@ -19,6 +19,15 @@
 
 <script>
 export default {
+  computed: {
+    token() {
+      if (window.location.search.indexOf("test402") >= 0) {
+        return "test402";
+      } else {
+        return "token12345";
+      }
+    }
+  },
   methods: {
     confirm() {
       if (window.ym) {
@@ -85,7 +94,7 @@ export default {
           signal: this.$store.state.uploadForm.controller.signal,
           method: "POST",
           headers: {
-            Authorization: "token12345"
+            Authorization: this.token
           },
           body: formData
         });
@@ -139,11 +148,14 @@ export default {
           response = await fetch("https://sig.2px.ru/status?uuid=" + uuid, {
             signal: this.$store.state.uploadForm.controller.signal,
             headers: {
-              Authorization: "token12345"
+              Authorization: this.token
             },
             method: "GET"
           });
         } catch (err) {
+          if (result.status === 402) {
+            this.error = `Достигнут суточный лимит количества проверок документов с вашего IP. Завтра вы сможете продолжить пользоваться сервисом. Если вы хотите пользоваться сервисом без ограничений, компания ООО "Твин пикс" может предложить вам на коммерческой основе создание индивидуального сервиса проверки ЭП для вашей организации или помочь интегрировать сервис проверки подписи в вашу информационную систему. Контактный e-mail: support@twinpx.ru.`;
+          }
           if (!this.$store.state.uploadForm.controllerAborted) {
             this.error = "Произошла ошибка, попробуйте снова.";
           }
