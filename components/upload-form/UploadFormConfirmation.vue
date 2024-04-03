@@ -114,7 +114,7 @@ export default {
         });
       } catch (err) {
         if (!this.$store.state.uploadForm.controllerAborted) {
-          this.error = "Произошла ошибка, попробуйте снова.";
+          this.$store.commit("changeUploadError", "Произошла ошибка.");
         }
         this.$store.commit("setUploadFormProp", {
           prop: "controllerAborted",
@@ -128,10 +128,12 @@ export default {
 
       if (result.status != 200) {
         if (result.status === 402) {
-          this.error = `Достигнут суточный лимит количества проверок документов с вашего IP. Завтра вы сможете продолжить пользоваться сервисом. Если вы хотите пользоваться сервисом без ограничений, компания ООО "Твин пикс" может предложить вам на коммерческой основе создание индивидуального сервиса проверки ЭП для вашей организации или помочь интегрировать сервис проверки подписи в вашу информационную систему. Контактный e-mail: support@twinpx.ru.`;
-        }
-        if (!this.$store.state.uploadForm.controllerAborted) {
-          this.error = "Произошла ошибка, попробуйте снова.";
+          this.$store.commit(
+            "changeUploadError",
+            `Достигнут суточный лимит количества проверок документов с вашего IP. Завтра вы сможете продолжить пользоваться сервисом. Если вы хотите пользоваться сервисом без ограничений, компания ООО "Твин пикс" может предложить вам на коммерческой основе создание индивидуального сервиса проверки ЭП для вашей организации или помочь интегрировать сервис проверки подписи в вашу информационную систему. Контактный e-mail: support@twinpx.ru.`
+          );
+        } else if (!this.$store.state.uploadForm.controllerAborted) {
+          this.$store.commit("changeUploadError", "Произошла ошибка.");
         }
 
         this.$store.commit("setUploadFormProp", {
@@ -154,10 +156,12 @@ export default {
           });
         } catch (err) {
           if (result.status === 402) {
-            this.error = `Достигнут суточный лимит количества проверок документов с вашего IP. Завтра вы сможете продолжить пользоваться сервисом. Если вы хотите пользоваться сервисом без ограничений, компания ООО "Твин пикс" может предложить вам на коммерческой основе создание индивидуального сервиса проверки ЭП для вашей организации или помочь интегрировать сервис проверки подписи в вашу информационную систему. Контактный e-mail: support@twinpx.ru.`;
-          }
-          if (!this.$store.state.uploadForm.controllerAborted) {
-            this.error = "Произошла ошибка, попробуйте снова.";
+            this.$store.commit(
+              "changeUploadError",
+              `Достигнут суточный лимит количества проверок документов с вашего IP. Завтра вы сможете продолжить пользоваться сервисом. Если вы хотите пользоваться сервисом без ограничений, компания ООО "Твин пикс" может предложить вам на коммерческой основе создание индивидуального сервиса проверки ЭП для вашей организации или помочь интегрировать сервис проверки подписи в вашу информационную систему. Контактный e-mail: support@twinpx.ru.`
+            );
+          } else if (!this.$store.state.uploadForm.controllerAborted) {
+            this.$store.commit("changeUploadError", "Произошла ошибка.");
           }
 
           this.$store.commit("setUploadFormProp", {
@@ -171,7 +175,7 @@ export default {
           await new Promise(r => setTimeout(r, 1000));
         } else if (response.status != 200) {
           if (!this.$store.state.uploadForm.controllerAborted) {
-            this.error = "Произошла ошибка, попробуйте снова.";
+            this.$store.commit("changeUploadError", "Произошла ошибка.");
           }
 
           this.$store.commit("setUploadFormProp", {

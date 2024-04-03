@@ -206,6 +206,9 @@ export const mutations = {
   changeUploadStatus(state, status) {
     state.uploadStatus = status;
   },
+  changeUploadError(state, error) {
+    state.uploadForm.error = error;
+  },
   setUploadFormFile(state, payload) {
     state.uploadForm.tabs[payload.tabIndex].buttons[payload.buttonIndex].file =
       payload.value;

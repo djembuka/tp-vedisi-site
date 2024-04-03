@@ -5,7 +5,10 @@
       <div class="terms-link">
         <NuxtLink to="/terms/"> <i></i> Условия использования</NuxtLink>
       </div>
-      <form action="" method="POST">
+      <upload-form-error
+        v-if="$store.state.uploadForm.error"
+      ></upload-form-error>
+      <form v-else action="" method="POST">
         <upload-form-control></upload-form-control>
       </form>
     </div>
@@ -20,6 +23,7 @@
 <script>
 import UploadFormH1 from "./UploadFormH1.vue";
 import UploadFormControl from "./UploadFormControl.vue";
+import UploadFormError from "./UploadFormError.vue";
 
 export default {
   data() {
@@ -44,7 +48,8 @@ export default {
   },
   components: {
     UploadFormH1,
-    UploadFormControl
+    UploadFormControl,
+    UploadFormError
   }
 };
 </script>
