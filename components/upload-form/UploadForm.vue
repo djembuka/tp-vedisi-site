@@ -8,7 +8,7 @@
       <upload-form-error
         v-if="$store.state.uploadForm.error"
       ></upload-form-error>
-      <form v-else action="" method="POST">
+      <form action="" method="POST">
         <upload-form-control></upload-form-control>
       </form>
     </div>
