@@ -91,8 +91,11 @@ export default {
   opacity: 1;
 }
 .upload-error .container {
+    margin: 0 auto;
   align-items: center;
   flex-direction: initial;
+  min-height: 100vh;
+  display: flex;
 }
 .upload-error__content {
   color: #fff;
